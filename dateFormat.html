@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>날짜 포맷터</h2>
+    <script>
+        // 1. 사용자 등록, 제품 등록, 게시글 등록처럼 특정 데이터를 등록한 날짜를
+        // 데이터베이스에 저장하고 화면에 등록된 날짜를 보여주는 경우
+        function getCurrentDate(format) {
+
+            let d = new Date();
+            let year = d.getFullYear();
+            let month = d.getMonth() + 1;
+            month = month.toString().padStart(2, 0);
+            let day = d.getDate();
+            day = day.toString().padStart(2, 0);
+
+            format = format.replace("YYYY", year);
+            format = format.replace("MM", month);
+            format = format.replace("DD", day);
+
+            return format;
+        }
+
+        console.log("=== 1. 데이터베이스 등록 ===");
+        console.log("날짜를 다루는 방법");
+        console.log(getCurrentDate("방법1: YYYY-MM-DD"));
+        console.log(getCurrentDate("방법2: MM.DD.YYYY"));
+
+        console.log("나라별 날짜 표시 방법");
+        console.log(getCurrentDate("ko: YYYY.MM.DD"));
+        console.log(getCurrentDate("en: MM.DD.YYYY"));
+        console.log(getCurrentDate("eu: DD.MM.YYYY"));
+        console.log("===========================");
+
+        // 2. 사용자 목록, 제품 목록, 게시글 목록 등 특정 데이터 목록을 날짜를 이용해
+        // 조회구간을 정해서 조회하는 경우
+        function convertDateFormat(yyyymmdd, format) {
+            let year = yyyymmdd.substr(0 ,4);
+            let month = yyyymmdd.substr(4, 2);
+            let day = yyyymmdd.substr(6, 2);
+
+            format = format.replace("YYYY", year);
+            format = format.replace("MM", month);
+            format = format.replace("DD", day);
+
+            return format;
+        }
+
+        console.log("=== 2. 데이터베이스 조회 ===");
+        console.log(convertDateFormat("20210721", "YYYY.MM.YY"));
+        console.log("===========================");
+
+        // 3. 현재 날짜를 기준으로 특정 일수만큼 며칠 전, 혹은 며칠 후를 반환하는 함수
+        function getIntervalDate(intervalDay, format) {
+            let now = new Date();
+            let millisecondsOneDay = 60 * 60 * 24 * 1000;
+            let d = new Date(now.getTime() + (millisecondsOneDay * intervalDay));
+            let year = d.getFullYear();
+            let month = d.getMonth() + 1;
+            month = month.toString().padStart(2, 0);
+            let day = d.getDate();
+            day = day.toString().padStart(2, 0);
+
+            format = format.replace("YYYY", year);
+            format = format.replace("MM", month);
+            format = format.replace("DD", day);
+
+            return format;
+        }
+
+        console.log("=== 3. 특정 일수의 날짜 ===");
+        console.log(getIntervalDate(5, "YYYY-MM-DD"));
+        console.log(getIntervalDate(-5, "YYYY-MM-DD"));
+        console.log("===========================");
+
+    </script>
+</body>
+</html>
