@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>금액 포맷터</h2>
+    <script>
+        function convertCurrencyFormat(amount, format) {
+            let currencyUnit = ""; // 화폐 단위 표기
+
+            if (format.substring(0, 1) != "#") {
+                currencyUnit = format.substring(0, 1);
+            }
+
+            let groupingSeparator = ""; // 금액 3자리마다 구분자 기본 값은 콤마(,)로 설정
+            let maxFractionDigits = 0; // 소수점 이하 자릿수 기본 값은 0
+            let decimalSeparator = ""; // 소수점 이하 구분자 기본 값은 점(.)으로 설정
+
+            if (format.indexOf(".") == -1) {
+                groupingSeparator =",";
+            } else if(format.indexOf(",") == -1) {
+                groupingSeparator = ".";
+            } else if (format.indexOf(",") < format.indexOf(".")) {
+                groupingSeparator = ",";
+                decimalSeparator = ".";
+                maxFractionDigits = format.length - format.indexOf(".") - 1;
+            } else {
+                groupingSeparator = ".";
+                decimalSeparator = ",";
+                maxFractionDigits = format.length - format.indexOf(",") - 1;
+            }
+
+            let sign = "";
+            let dec = 1;
+            for (var i = 0; i < maxFractionDigits; i++) {
+                dec *= 10;
+            }
+
+            let v = String(Math.round(parseFloat(amount) * dec) / dec);
+
+            if(v.startsWith("-")) {
+                sign = "-";
+                v = v.substring(1);
+            }
+
+            if (maxFractionDigits > 0 && format.substring(format.length - 1) == "0") {
+                v = String(parseFloat(v).toFixed(maxFractionDigits));
+            }
+
+            let d = "";
+
+            if (maxFractionDigits > 0 && v.indexOf(".") > -1) {
+                d = v.substring(v.indexOf("."));
+                d = d.replace(".", decimalSeparator);
+                v = v.substring(0, v.indexOf("."));
+            }
+
+            let r = /(\d+)(\d{3})/;
+
+            while (r.test(v)) {
+                v = v.replace(r, "$1" + groupingSeparator + "$2");
+            }
+
+            return sign + currencyUnit + String(v) + String(d);
+        }
+
+        console.log(convertCurrencyFormat(5421338, "#,###"));
+        console.log(convertCurrencyFormat(5421338, "₩#,###"));
+        console.log(convertCurrencyFormat(5421338, "$#,###.##"));
+        console.log(convertCurrencyFormat(5421338, "$#,###.#0"));
+        console.log(convertCurrencyFormat(5421339.1, "$#,###.#0"));
+        console.log(convertCurrencyFormat(5421339.12, "$#,###.#0"));
+    </script>
+</body>
+</html>
