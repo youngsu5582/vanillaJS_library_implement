@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>정수형 숫자만 입력 가능한 input 필드</h2>
+    <input type="text" onkeydown="checkInt(event);" onkeyup="checkKr(event);">
+    <input type="text" onkeydown="c(event);">
+    <script>
+        function c(e) {
+            console.log(e.keyCode);
+        }
+
+        function checkInt(e) {
+            if(
+                !(
+                    (e.keyCode >= 48 && e.keyCode <= 57) ||
+                    (e.keyCode >= 96 && e.keyCode <= 105) ||
+                    e.keyCode == 8 ||
+                    e.keyCode == 46 ||
+                    e.keyCode == 37 ||
+                    e.keyCode == 39
+                )
+            ) {
+                e.preventDefault();
+            }
+        }
+
+        function checkKr(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/gi, "");
+        }
+    </script>
+</body>
+</html>
