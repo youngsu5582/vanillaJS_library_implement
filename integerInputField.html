@@ -9,12 +9,7 @@
 <body>
     <h2>정수형 숫자만 입력 가능한 input 필드</h2>
     <input type="text" onkeydown="checkInt(event);" onkeyup="checkKr(event);">
-    <input type="text" onkeydown="c(event);">
     <script>
-        function c(e) {
-            console.log(e.keyCode);
-        }
-
         function checkInt(e) {
             if(
                 !(
