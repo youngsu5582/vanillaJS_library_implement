@@ -98,12 +98,12 @@
             let month_day = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
             if (month == 2) {
-                if (checkLeapYear(year)) month_day[1] = 29;
+                if (checkLeapYear(year)) month_day[1] = 29; // 윤년체크
             }
 
             let first_day_of_week = getFirstDayOfWeek(year, month);
             let arr_calendar = [];
-            for (let i = 0; i < first_day_of_week; i++) {
+            for (let i = 0; i < first_day_of_week; i++) { // 시작요일 전까지 공백
                 arr_calendar.push("");
             }
 
@@ -113,7 +113,7 @@
 
             let remain_day = 7 - (arr_calendar.length % 7);
             if (remain_day < 7) {
-                for (let i = 0; i < remain_day; i++) {
+                for (let i = 0; i < remain_day; i++) { // 달력의 마지막 부분 공백 처리
                     arr_calendar.push("");
                 }
             }
@@ -121,7 +121,7 @@
             renderCalendar(arr_calendar);
         }
 
-        function renderCalendar(data) {
+        function renderCalendar(data) { // Calender Rendering
             let h = [];
             for (let i = 0; i < data.length; i++) {
                 if (i == 0) {
