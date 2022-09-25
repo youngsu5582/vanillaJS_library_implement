@@ -84,9 +84,9 @@
         }
 
         function getFirstDayOfWeek(year, month) {
-            if(month < 10) month = "0" + month;
+            if(month < 10) month = "0" + month; // 10월 이하일 경우 두자리 표기
 
-            return new Date(year + "-" + month + "-01").getDay();
+            return new Date(year + "-" + month + "-01").getDay(); // 요일출력함수
         }
 
         function changeYear() {
