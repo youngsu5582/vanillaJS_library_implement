@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>다국어</h2>
+    <h1 data-i18n="Order List"></h1>
+    <button data-i18n="Search"></button>
+    <script>
+        const i18n = {
+            en: {
+                "Order List": "Order List",
+                "Search": "Search",
+            },
+            ko: {
+                "Order List": "주문 목록",
+                "Search": "조회",
+            },
+        };
+
+        const userLanguage = "ko";
+
+        function loadTranslation() {
+            var i18ns = document.querySelectorAll("[data-i18n]");
+
+            for (const item of i18ns) {
+                item.innerText = i18n[userLanguage][item.getAttribute("data-i18n")];
+            }
+        }
+
+        window.addEventListener("load", loadTranslation);
+    </script>
+</body>
+</html>
